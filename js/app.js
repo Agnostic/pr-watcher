@@ -12,7 +12,7 @@ app.service('Github', ['$http', function($http) {
       return $http.get(baseUrl + 'repos/frontend/' + repo + '/pulls?state=open&access_token=' + token);
     },
     getComments: function(commentsUrl) {
-      return $http.get(commentsUrl '?&access_token=' + token);
+      return $http.get(commentsUrl + '?&access_token=' + token);
     }
   };
 }]);
