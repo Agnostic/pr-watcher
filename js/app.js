@@ -1,10 +1,13 @@
 var app = angular.module('app', []);
 
 app.service('Github', [function() {
-  var baseUrl = 'http://github.services.ooyala.net';
+  var baseUrl = 'http://github.services.ooyala.net/api/v3/';
   var token = localStorage.getItem('accessToken') || '';
 
   return {
+    getRepos: function() {
+      return $http.get(baseUrl + 'orgs/frontend?access_token=' + token);
+    }
   };
 }]);
 
@@ -36,4 +39,14 @@ app.run(['$http', function($http) {
       // Validate access token
     }
   }
+}]);
+
+app.controller('reposController', ['$scope', 'Github', function($scope, Github) {
+  $scope.repos = [];
+
+  Github.getRepos().then(function(response) {
+    $scope.repos = response.data;
+    console.log($scope.repos);
+  });
+
 }]);
