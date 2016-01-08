@@ -63,6 +63,8 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
       repos: []
     };
 
+    $scope.orgs.push(_org);
+
     Github.getRepos(org).then(function(response) {
       var repos = response.data;
       // var repos = $scope.repos.concat(response.data);
@@ -91,7 +93,6 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
             });
           });
           _org.repos.push(repo);
-          $scope.orgs.push(_org);
         });
       });
     });
