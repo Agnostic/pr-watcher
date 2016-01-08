@@ -25,7 +25,7 @@ app.run(['$http', function($http) {
         if (response.data.access_token) {
           localStorage.setItem('accessToken', response.data.access_token);
         } else {
-          location.href = '/' + location.pathname;
+          location.href = '/pages/frontend/pr-manager/';
         }
       });
   } else {
