@@ -59,7 +59,7 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
 
   _.forEach(orgs, function(org) {
     Github.getRepos(org).then(function(response) {
-      $scope.repos = _.concat($scope.repos, response.data);
+      $scope.repos.concat(response.data);
 
       $scope.repos.forEach(function(repo) {
         Github.getPRs(repo.name).then(function(response) {
