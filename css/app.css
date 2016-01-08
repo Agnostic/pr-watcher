@@ -22,11 +22,7 @@ hr {
   margin-bottom: 40px;
 }
 
-/*.repository tbody tr > td:first-child {
-  width: 80%;
-}*/
-
-.repository table tbody tr > td .label {
+.panel-body table tbody tr > td .label {
   float: right;
   margin-left: 5px;
 }
