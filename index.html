@@ -21,11 +21,11 @@
 
       <div ng-repeat="org in orgs" class="panel panel-default">
         <div class="panel-heading">
-          <div class="panel-title">Organization: {{ org.name }}</div>
           <button class="btn btn-default btn-sm pull-right" ng-click="org.hidden = !org.hidden">
             <span ng-hide="org.hidden">Hide</span>
             <span ng-show="org.hidden">Show</span>
           </button>
+          <div class="panel-title">Organization: {{ org.name }}</div>
         </div>
         <div class="panel-body" ng-show="!org.hidden">
           <div ng-repeat="repo in org.repos" ng-show="repo.prs.length" class="repository">
