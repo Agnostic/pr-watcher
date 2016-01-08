@@ -61,12 +61,15 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
           array[index].reviewers = [];
 
           Github.getComments(pr.comments_url).then(function(response) {
+            var comments = response.data;
             console.log('comments', response.data);
 
             pr.body.match(/@\w+/g).forEach(function(reviewer) {
               array[index].reviewers.push({
                 name: reviewer,
-                reviewed: false
+                reviewed: _.find(comments, function(comment) {
+                  return comment.body.match(/LGTM/gi) && (user.login === '@' + reviewer);
+                });
               });
             });
           });
