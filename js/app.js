@@ -58,10 +58,10 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
   }
 
   _.forEach(orgs, function(org) {
-    $scope.orgs[org] = {
+    $scope.orgs.push({
       name: org,
       repos: []
-    };
+    });
 
     Github.getRepos(org).then(function(response) {
       var repos = response.data;
