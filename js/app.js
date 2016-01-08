@@ -47,7 +47,7 @@ app.run(['$http', function($http) {
   }
 }]);
 
-app.controller('reposController', ['$scope', 'Github', '$http', function($scope, Github, $http) {
+app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', function($scope, Github, $http, $timeout) {
   var orgs = localStorage.getItem('orgs');
   if (orgs) {
     orgs = JSON.parse(orgs);
