@@ -69,7 +69,7 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
                 name: reviewer,
                 reviewed: _.find(comments, function(comment) {
                   return comment.body.match(/LGTM/gi) && (user.login === '@' + reviewer);
-                });
+                })
               });
             });
           });
