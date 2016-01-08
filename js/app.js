@@ -25,7 +25,7 @@ app.run(['$http', function($http) {
         if (response.data.access_token) {
           localStorage.setItem('accessToken');
         } else {
-          location.href = '/';
+          location.href = '/' + location.pathname;
         }
       });
   } else {
