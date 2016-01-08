@@ -59,9 +59,9 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
 
   _.forEach(orgs, function(org) {
     Github.getRepos(org).then(function(response) {
-      $scope.repos = $scope.repos.concat(response.data);
+      // var repos = $scope.repos.concat(response.data);
 
-      $scope.repos.forEach(function(repo) {
+      repos.forEach(function(repo) {
         Github.getPRs(repo.name, org).then(function(response) {
           repo.prs = response.data || [];
 
@@ -83,6 +83,7 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
                 });
               }
             });
+            $scope.repos.push(repo);
           });
         });
       });
