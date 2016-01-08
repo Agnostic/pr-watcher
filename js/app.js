@@ -5,8 +5,8 @@ app.service('Github', ['$http', function($http) {
   var token = localStorage.getItem('accessToken') || '';
 
   return {
-    getRepos: function() {
-      return $http.get(baseUrl + 'orgs/frontend/repos?access_token=' + token);
+    getRepos: function(org) {
+      return $http.get(baseUrl + 'orgs/' + org + '/repos?access_token=' + token);
     },
     getPRs: function(repo) {
       return $http.get(baseUrl + 'repos/frontend/' + repo + '/pulls?state=open&access_token=' + token);
@@ -50,27 +50,34 @@ app.run(['$http', function($http) {
 app.controller('reposController', ['$scope', 'Github', function($scope, Github) {
   $scope.repos = [];
 
-  Github.getRepos().then(function(response) {
-    $scope.repos = response.data;
+  var orgs = localStorage.getItem('orgs');
+  if (orgs) {
+    orgs = JSON.parse(orgs);
+  } else {
+    orgs = ['frontend', 'optimization'];
+  }
 
-    $scope.repos.forEach(function(repo) {
-      Github.getPRs(repo.name).then(function(response) {
-        repo.prs = response.data || [];
+  _.forEach(orgs, function(org)) {
+    Github.getRepos(org).then(function(response) {
+      $scope.repos = _.concat($scope.repos, response.data);
 
-        repo.prs.forEach(function(pr, index, array) {
-          array[index].reviewers = [];
+      $scope.repos.forEach(function(repo) {
+        Github.getPRs(repo.name).then(function(response) {
+          repo.prs = response.data || [];
 
-          Github.getComments(pr.comments_url).then(function(response) {
-            var comments = response.data;
-            console.log('comments', response.data);
+          repo.prs.forEach(function(pr, index, array) {
+            array[index].reviewers = [];
 
-            pr.body.match(/@\w+/g).forEach(function(reviewer) {
-              array[index].reviewers.push({
-                name: reviewer,
-                reviewed: _.find(comments, function(comment) {
-                  console.log(reviewer, comment.body.match(/LGTM/gi));
-                  return comment.body.match(/LGTM/gi) && comment.user.login === reviewer.replace(/^@/, '');
-                })
+            Github.getComments(pr.comments_url).then(function(response) {
+              var comments = response.data;
+
+              pr.body.match(/@\w+/g).forEach(function(reviewer) {
+                array[index].reviewers.push({
+                  name: reviewer,
+                  reviewed: _.find(comments, function(comment) {
+                    return comment.body.match(/LGTM/gi) && comment.user.login === reviewer.replace(/^@/, '');
+                  })
+                });
               });
             });
           });
