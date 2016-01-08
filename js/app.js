@@ -67,6 +67,7 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
             });
           });
         });
+        console.log(repo.prs);
       });
     });
   });
