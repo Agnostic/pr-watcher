@@ -57,9 +57,9 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
       Github.getPRs(repo.name).then(function(response) {
         repo.prs = response.data || [];
 
-        repo.prs.forEach(function(pr) {
-          pr.reviewers = pr.body.match(/@\w+/g);
-          console.log(pr, pr.reviewers);
+        repo.prs.forEach(function(pr, index, array) {
+          array[index].reviewers = pr.body.match(/@\w+/g);
+          console.log(array);
         });
       });
     });
