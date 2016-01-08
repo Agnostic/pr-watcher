@@ -26,3 +26,11 @@ hr {
   float: right;
   margin-left: 5px;
 }
+
+.repository .table {
+  margin-bottom: 0;
+}
+
+.repository h3 {
+  margin-top: 5px;
+}
