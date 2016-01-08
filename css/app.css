@@ -22,6 +22,10 @@ hr {
   margin-bottom: 40px;
 }
 
-.repository tbody tr > td:first-child {
+/*.repository tbody tr > td:first-child {
   width: 80%;
+}*/
+
+.repository tbody tr > td label {
+  float: right;
 }
