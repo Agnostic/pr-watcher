@@ -61,7 +61,7 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
           array[index].reviewers = [];
 
           Github.getComments(repo.name, pr.number).then(function(response) {
-            console.log(response.data);
+            console.log('comments', response.data);
 
             pr.body.match(/@\w+/g).forEach(function(reviewer) {
               array[index].reviewers.push({
@@ -71,7 +71,6 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
             });
           });
         });
-        console.log(repo.prs);
       });
     });
   });
