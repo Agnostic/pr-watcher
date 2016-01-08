@@ -71,14 +71,17 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
             Github.getComments(pr.comments_url).then(function(response) {
               var comments = response.data;
 
-              pr.body.match(/@\w+/g).forEach(function(reviewer) {
-                array[index].reviewers.push({
-                  name: reviewer,
-                  reviewed: _.find(comments, function(comment) {
-                    return comment.body.match(/LGTM/gi) && comment.user.login === reviewer.replace(/^@/, '');
-                  })
+              var reviewers = pr.body.match(/@\w+/g);
+              if (reviewers) {
+                reviewers.forEach(function(reviewer) {
+                  array[index].reviewers.push({
+                    name: reviewer,
+                    reviewed: _.find(comments, function(comment) {
+                      return comment.body.match(/LGTM/gi) && comment.user.login === reviewer.replace(/^@/, '');
+                    })
+                  });
                 });
-              });
+              }
             });
           });
         });
