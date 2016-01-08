@@ -21,7 +21,7 @@
 
       <div ng-repeat="org in orgs" class="panel panel-default">
         <div class="panel-heading">
-          <div class="panel-title">{{ org.name }}</div>
+          <div class="panel-title">Organization: {{ org.name }}</div>
         </div>
         <div ng-repeat="repo in org.repos" ng-show="repo.prs.length" class="panel-body">
           <h3>{{ repo.name }}</h3>
