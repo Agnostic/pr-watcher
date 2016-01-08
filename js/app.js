@@ -2,7 +2,7 @@ var app = angular.module('app', []);
 
 app.service('Github', [function() {
   var baseUrl = 'http://github.services.ooyala.net';
-  var token = localStorage.getItem('accessToken');
+  var token = localStorage.getItem('accessToken') || '';
 
   return {
   };
@@ -23,7 +23,7 @@ app.run(['$http', function($http) {
         code: code
       }).then(function(response) {
         if (response.data.access_token) {
-          localStorage.setItem('accessToken');
+          localStorage.setItem('accessToken', response.data.access_token);
         } else {
           location.href = '/' + location.pathname;
         }
