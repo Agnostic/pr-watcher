@@ -21,9 +21,15 @@
       <div ng-repeat="repo in repos">
         <h3>{{ repos.name }}</h3>
         <table class="table">
+          <thead>
+            <tr>
+              <th>PR Name</th>
+              <th>Status</th>
+            </tr>
+          </thead>
           <tbody>
             <tr>
-              <td>Link</td>
+              <td>Name/Link</td>
               <td>Status</td>
             </tr>
           </tbody>

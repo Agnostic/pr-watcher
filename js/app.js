@@ -1,6 +1,6 @@
 var app = angular.module('app', []);
 
-app.service('Github', [function() {
+app.service('Github', ['$http', function($http) {
   var baseUrl = 'http://github.services.ooyala.net/api/v3/';
   var token = localStorage.getItem('accessToken') || '';
 
