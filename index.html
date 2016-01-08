@@ -19,7 +19,7 @@
       </div>
 
       <div ng-repeat="repo in repos">
-        <h3>{{ repos.name }}</h3>
+        <h3>{{ repo.name }}</h3>
         <table class="table">
           <thead>
             <tr>
@@ -28,7 +28,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr ng-repeat="pr in repo.prs">
               <td>Name/Link</td>
               <td>Status</td>
             </tr>

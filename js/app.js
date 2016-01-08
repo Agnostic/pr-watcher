@@ -7,6 +7,9 @@ app.service('Github', ['$http', function($http) {
   return {
     getRepos: function() {
       return $http.get(baseUrl + 'orgs/frontend/repos?access_token=' + token);
+    },
+    getPRs: function(repo) {
+      return $http.get(baseUrl + 'orgs/frontend/' + repo + '?state=open&access_token=' + token);
     }
   };
 }]);
@@ -46,7 +49,13 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
 
   Github.getRepos().then(function(response) {
     $scope.repos = response.data;
-    console.log($scope.repos);
+
+    $scope.repos.forEach(function(repo) {
+      Github.getPRs(repo.name).then(function(response) {
+        repo.prs = response.data;
+        console.log(repo.prs);
+      })
+    });
   });
 
 }]);
