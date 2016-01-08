@@ -24,12 +24,16 @@ app.run(['$http', function($http) {
       }).then(function(response) {
         if (response.data.access_token) {
           localStorage.setItem('accessToken', response.data.access_token);
-        } else {
-          location.href = '/pages/frontend/pr-manager/';
         }
+        location.href = '/pages/frontend/pr-manager/';
       });
   } else {
-    location.href = baseUrl + '/login/oauth/authorize?client_id=' + clientId;
+    if (!localStorage.getItem('accessToken')) {
+      location.href = baseUrl + '/login/oauth/authorize?client_id=' + clientId;
+    } else {
+      console.log('accessToken', localStorage.getItem('accessToken'));
+      // TODO
+      // Validate access token
+    }
   }
-  console.log('Run', location.search);
 }]);
