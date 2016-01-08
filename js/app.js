@@ -48,7 +48,7 @@ app.run(['$http', function($http) {
 }]);
 
 app.controller('reposController', ['$scope', 'Github', function($scope, Github) {
-  $scope.repos = [];
+  $scope.orgs = [];
 
   var orgs = localStorage.getItem('orgs');
   if (orgs) {
@@ -58,6 +58,11 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
   }
 
   _.forEach(orgs, function(org) {
+    $scope.orgs[org] = {
+      name: org,
+      repos: []
+    };
+
     Github.getRepos(org).then(function(response) {
       var repos = response.data;
       // var repos = $scope.repos.concat(response.data);
@@ -85,7 +90,7 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
               }
             });
           });
-          $scope.repos.push(repo);
+          $scope.orgs[org].repos.push(repo);
         });
       });
     });
