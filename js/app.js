@@ -57,7 +57,7 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
     orgs = ['frontend', 'optimization'];
   }
 
-  _.forEach(orgs, function(org)) {
+  _.forEach(orgs, function(org) {
     Github.getRepos(org).then(function(response) {
       $scope.repos = _.concat($scope.repos, response.data);
 
