@@ -68,8 +68,8 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
               array[index].reviewers.push({
                 name: reviewer,
                 reviewed: _.find(comments, function(comment) {
-                  console.log(comment.user.login === '@' + reviewer, comment.body.match(/LGTM/gi).length);
-                  return comment.body.match(/LGTM/gi).length && (comment.user.login === '@' + reviewer);
+                  console.log('@' + reviewer, comment.body.match(/LGTM/gi).length);
+                  return comment.body.match(/LGTM/gi).length && comment.user.login === ('@' + reviewer);
                 })
               });
             });
