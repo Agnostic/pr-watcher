@@ -11,8 +11,8 @@ app.service('Github', ['$http', function($http) {
     getPRs: function(repo) {
       return $http.get(baseUrl + 'repos/frontend/' + repo + '/pulls?state=open&access_token=' + token);
     },
-    getComments: function(repo, prNumber) {
-      return $http.get(baseUrl + 'repos/frontend/' + repo + '/pulls/' + prNumber + '?&access_token=' + token);
+    getComments: function(commentsUrl) {
+      return $http.get(commentsUrl '?&access_token=' + token);
     }
   };
 }]);
@@ -60,7 +60,7 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
         repo.prs.forEach(function(pr, index, array) {
           array[index].reviewers = [];
 
-          Github.getComments(repo.name, pr.number).then(function(response) {
+          Github.getComments(pr.comments_url).then(function(response) {
             console.log('comments', response.data);
 
             pr.body.match(/@\w+/g).forEach(function(reviewer) {
