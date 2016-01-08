@@ -6,7 +6,7 @@ app.service('Github', ['$http', function($http) {
 
   return {
     getRepos: function() {
-      return $http.get(baseUrl + 'orgs/frontend?access_token=' + token);
+      return $http.get(baseUrl + 'orgs/frontend/repos?access_token=' + token);
     }
   };
 }]);
