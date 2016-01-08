@@ -19,9 +19,12 @@
         <p class="lead">Bla bla bla, FE team rulez.</p>
       </div>
 
-      <div ng-repeat="org in orgs">
-        <div ng-repeat="repo in org.repos" ng-show="repo.prs.length" class="repository">
-          <h3>{{ repo.name }} ({{ repo.owner.login }})</h3>
+      <div ng-repeat="org in orgs" class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">{{ org.name }}</div>
+        </div>
+        <div ng-repeat="repo in org.repos" ng-show="repo.prs.length" class="panel-body">
+          <h3>{{ repo.name }}</h3>
           <table class="table table-hover">
             <tbody>
               <tr ng-repeat="pr in repo.prs">
