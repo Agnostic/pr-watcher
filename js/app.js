@@ -84,8 +84,8 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
                 });
               }
             });
-            $scope.repos.push(repo);
           });
+          $scope.repos.push(repo);
         });
       });
     });
