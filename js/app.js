@@ -58,10 +58,10 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
   }
 
   _.forEach(orgs, function(org) {
-    $scope.orgs.push({
+    var org = {
       name: org,
       repos: []
-    });
+    };
 
     Github.getRepos(org).then(function(response) {
       var repos = response.data;
@@ -90,7 +90,8 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
               }
             });
           });
-          $scope.orgs[org].repos.push(repo);
+          org.repos.push(repo);
+          $scope.orgs.push(org);
         });
       });
     });
