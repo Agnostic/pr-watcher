@@ -55,6 +55,7 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
     orgs = JSON.parse(orgs);
   } else {
     orgs = ['frontend', 'optimization'];
+    localStorage.setItem('orgs', JSON.stringify(orgs));
   }
 
   _.forEach(orgs, function(org) {
@@ -67,7 +68,6 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
 
     Github.getRepos(org).then(function(response) {
       var repos = response.data;
-      // var repos = $scope.repos.concat(response.data);
 
       repos.forEach(function(repo) {
         Github.getPRs(repo.name, org).then(function(response) {
