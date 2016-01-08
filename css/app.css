@@ -26,6 +26,6 @@ hr {
   width: 80%;
 }*/
 
-.repository tbody tr > td label {
+.repository table tbody tr > td .label {
   float: right;
 }
