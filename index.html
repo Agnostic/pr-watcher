@@ -23,21 +23,23 @@
         <div class="panel-heading">
           <div class="panel-title">Organization: {{ org.name }}</div>
         </div>
-        <div ng-repeat="repo in org.repos" ng-show="repo.prs.length" class="panel-body">
-          <h3>{{ repo.name }}</h3>
-          <table class="table table-hover">
-            <tbody>
-              <tr ng-repeat="pr in repo.prs">
-                <td><a ng-href="{{ pr.html_url }}" target="_blank">{{ pr.title }}</a></td>
-                <td>
-                  <span class="label label-default"
-                    ng-repeat="reviewer in pr.reviewers" ng-class="{ 'label-success': reviewer.reviewed }">
-                    {{ reviewer.name }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="panel-body">
+          <div ng-repeat="repo in org.repos" ng-show="repo.prs.length" class="repository">
+            <h3>{{ repo.name }}</h3>
+            <table class="table table-hover">
+              <tbody>
+                <tr ng-repeat="pr in repo.prs">
+                  <td><a ng-href="{{ pr.html_url }}" target="_blank">{{ pr.title }}</a></td>
+                  <td>
+                    <span class="label label-default"
+                      ng-repeat="reviewer in pr.reviewers" ng-class="{ 'label-success': reviewer.reviewed }">
+                      {{ reviewer.name }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

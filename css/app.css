@@ -22,7 +22,7 @@ hr {
   margin-bottom: 40px;
 }
 
-.panel-body table tbody tr > td .label {
+.repository table tbody tr > td .label {
   float: right;
   margin-left: 5px;
 }
