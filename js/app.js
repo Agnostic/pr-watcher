@@ -8,8 +8,8 @@ app.service('Github', ['$http', function($http) {
     getRepos: function(org) {
       return $http.get(baseUrl + 'orgs/' + org + '/repos?access_token=' + token);
     },
-    getPRs: function(repo) {
-      return $http.get(baseUrl + 'repos/frontend/' + repo + '/pulls?state=open&access_token=' + token);
+    getPRs: function(repo, org) {
+      return $http.get(baseUrl + 'repos/' + org + '/' + repo + '/pulls?state=open&access_token=' + token);
     },
     getComments: function(commentsUrl) {
       return $http.get(commentsUrl + '?&access_token=' + token);
@@ -62,7 +62,7 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
       $scope.repos = $scope.repos.concat(response.data);
 
       $scope.repos.forEach(function(repo) {
-        Github.getPRs(repo.name).then(function(response) {
+        Github.getPRs(repo.name, org).then(function(response) {
           repo.prs = response.data || [];
 
           repo.prs.forEach(function(pr, index, array) {
