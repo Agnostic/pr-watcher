@@ -9,7 +9,7 @@ app.service('Github', ['$http', function($http) {
       return $http.get(baseUrl + 'orgs/frontend/repos?access_token=' + token);
     },
     getPRs: function(repo) {
-      return $http.get(baseUrl + 'orgs/frontend/' + repo + '?state=open&access_token=' + token);
+      return $http.get(baseUrl + 'repos/frontend/' + repo + '/pulls?state=open&access_token=' + token);
     }
   };
 }]);
