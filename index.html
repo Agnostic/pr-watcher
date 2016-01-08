@@ -18,19 +18,21 @@
         <p class="lead">Bla bla bla.</p>
       </div>
 
-      <div ng-repeat="repo in repos">
+      <div ng-repeat="repo in repos" ng-show="repo.prs.length">
         <h3>{{ repo.name }}</h3>
         <table class="table">
-          <thead>
+          <!-- <thead>
             <tr>
               <th>PR Name</th>
               <th>Status</th>
             </tr>
-          </thead>
+          </thead> -->
           <tbody>
             <tr ng-repeat="pr in repo.prs">
-              <td>Name/Link</td>
-              <td>Status</td>
+              <td><a ng-href="{{ pr.url }}" target="_blank">{{ pr.title }}</a></td>
+              <td>
+                <span class="label label-default">Waiting for review</span>
+              </td>
             </tr>
           </tbody>
         </table>
