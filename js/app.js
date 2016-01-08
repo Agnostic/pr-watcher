@@ -47,9 +47,7 @@ app.run(['$http', function($http) {
   }
 }]);
 
-app.controller('reposController', ['$scope', 'Github', function($scope, Github) {
-  $scope.orgs = [];
-
+app.controller('reposController', ['$scope', 'Github', '$http', function($scope, Github, $http) {
   var orgs = localStorage.getItem('orgs');
   if (orgs) {
     orgs = JSON.parse(orgs);
@@ -58,44 +56,53 @@ app.controller('reposController', ['$scope', 'Github', function($scope, Github) 
     localStorage.setItem('orgs', JSON.stringify(orgs));
   }
 
-  _.forEach(orgs, function(org) {
-    var _org = {
-      name: org,
-      repos: []
-    };
+  $scope.getData = function() {
+    $scope.orgs = [];
 
-    $scope.orgs.push(_org);
+    _.forEach(orgs, function(org) {
+      var _org = {
+        name: org,
+        repos: []
+      };
 
-    Github.getRepos(org).then(function(response) {
-      var repos = response.data;
+      $scope.orgs.push(_org);
 
-      repos.forEach(function(repo) {
-        Github.getPRs(repo.name, org).then(function(response) {
-          repo.prs = response.data || [];
+      Github.getRepos(org).then(function(response) {
+        var repos = response.data;
 
-          repo.prs.forEach(function(pr, index, array) {
-            array[index].reviewers = [];
+        repos.forEach(function(repo) {
+          Github.getPRs(repo.name, org).then(function(response) {
+            repo.prs = response.data || [];
 
-            Github.getComments(pr.comments_url).then(function(response) {
-              var comments = response.data;
+            repo.prs.forEach(function(pr, index, array) {
+              array[index].reviewers = [];
 
-              var reviewers = pr.body.match(/@\w+/g);
-              if (reviewers) {
-                reviewers.forEach(function(reviewer) {
-                  array[index].reviewers.push({
-                    name: reviewer,
-                    reviewed: _.find(comments, function(comment) {
-                      return comment.body.match(/LGTM/gi) && comment.user.login === reviewer.replace(/^@/, '');
-                    })
+              Github.getComments(pr.comments_url).then(function(response) {
+                var comments = response.data;
+
+                var reviewers = pr.body.match(/@\w+/g);
+                if (reviewers) {
+                  reviewers.forEach(function(reviewer) {
+                    array[index].reviewers.push({
+                      name: reviewer,
+                      reviewed: _.find(comments, function(comment) {
+                        return comment.body.match(/LGTM/gi) && comment.user.login === reviewer.replace(/^@/, '');
+                      })
+                    });
                   });
-                });
-              }
+                }
+              });
             });
+            _org.repos.push(repo);
           });
-          _org.repos.push(repo);
         });
       });
     });
-  });
+  };
 
+  $scope.getData();
+
+  $timeout(function() {
+    $scope.getData();
+  }, 1000 * 60 * 5);
 }]);
