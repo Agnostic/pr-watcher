@@ -13,6 +13,9 @@ app.service('Github', ['$http', function($http) {
     },
     getComments: function(commentsUrl) {
       return $http.get(commentsUrl + '?&access_token=' + token);
+    },
+    getUser: function() {
+      return $http.get(baseUrl + 'user?access_token=' + token);
     }
   };
 }]);
@@ -48,6 +51,8 @@ app.run(['$http', function($http) {
 }]);
 
 app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', function($scope, Github, $http, $timeout) {
+  $scope.user = {};
+
   var orgs = localStorage.getItem('orgs');
   if (orgs) {
     orgs = JSON.parse(orgs);
@@ -55,6 +60,12 @@ app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', func
     orgs = ['frontend', 'optimization'];
     localStorage.setItem('orgs', JSON.stringify(orgs));
   }
+
+  $scope.reviewed = function(reviewers) {
+    return _.find(reviewers, function(reviewer) {
+      return reviewer.reviewed && reviewer.name === $scope.user.login;
+    });
+  };
 
   $scope.getData = function() {
     $scope.orgs = [];
@@ -100,7 +111,12 @@ app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', func
     });
   };
 
-  $scope.getData();
+  if (localStorage.getItem('accessToken')) {
+    $scope.getData();
+    Github.getUser().then(function(response) {
+      $scope.user = response.data;
+    });
+  }
 
   $timeout(function() {
     $scope.getData();
