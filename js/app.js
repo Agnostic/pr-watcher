@@ -43,7 +43,6 @@ app.run(['$http', function($http) {
     if (!localStorage.getItem('accessToken')) {
       location.href = baseUrl + '/login/oauth/authorize?client_id=' + clientId;
     } else {
-      console.log('accessToken', localStorage.getItem('accessToken'));
       // TODO
       // Validate access token
     }
@@ -62,7 +61,6 @@ app.filter('PrsBy', function() {
         var reviewer = _.find(item.reviewers, function(reviewer) {
           return reviewer.name === user;
         });
-        console.log(item, mentioned, reviewer);
         if (mentioned || reviewer) {
           filtered.push(item);
         }
