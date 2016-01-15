@@ -100,6 +100,14 @@ app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', func
     return body.match(user);
   };
 
+  $scope.showRepo = function(id) {
+    return $('#repo_' + id).find('tr:visible').length;
+  };
+
+  $scope.showOrg = function(id) {
+    return $('#org_' + id).find('.repository:visible').length;
+  };
+
   $scope.getData = function() {
     $scope.orgs = [];
 
