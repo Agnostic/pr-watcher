@@ -57,6 +57,7 @@ app.filter('PrsBy', function() {
       if (!filter) {
         filtered.push(item);
       } else {
+        console.log(item.body, user);
         var mentioned = item.body && item.body.match(user);
         var reviewer = _.find(item.reviewers, function(reviewer) {
           return reviewer.name === user;
