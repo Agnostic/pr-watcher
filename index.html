@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div ng-repeat="org in orgs" class="panel panel-default" ng-show="showOrg(org.name)" id="org_{{ org.name }}">
+      <div ng-repeat="org in orgs" class="panel panel-default" id="org_{{ org.name }}">
         <div class="panel-heading">
           <button class="btn btn-default btn-sm pull-right" ng-click="org.hidden = !org.hidden">
             <span ng-hide="org.hidden">Hide</span>
@@ -42,7 +42,7 @@
           <div class="panel-title">Organization: {{ org.name }}</div>
         </div>
         <div class="panel-body" ng-show="!org.hidden">
-          <div ng-repeat="repo in org.repos" ng-show="showRepo(repo.id)" class="repository" id="repo_{{ repo.id }}">
+          <div ng-repeat="repo in org.repos" class="repository" id="repo_{{ repo.id }}">
             <h3>{{ repo.name }}</h3>
             <table class="table table-hover">
               <tbody>
