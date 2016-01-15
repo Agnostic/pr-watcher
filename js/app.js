@@ -63,9 +63,8 @@ app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', func
 
   $scope.reviewed = function(reviewers) {
     var me = _.find(reviewers, function(reviewer) {
-      return reviewer.name === $scope.user.login;
+      return reviewer.name === ('@' + $scope.user.login);
     });
-    console.log(reviewers, $scope.user);
     if (me) {
       console.log(me.reviewed);
     }
