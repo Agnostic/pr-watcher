@@ -62,9 +62,10 @@ app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', func
   }
 
   $scope.reviewed = function(reviewers) {
-    return _.find(reviewers, function(reviewer) {
-      return reviewer.reviewed && reviewer.name === $scope.user.login;
+    var me = _.find(reviewers, function(reviewer) {
+      return reviewer.name === $scope.user.login;
     });
+    return me && me.reviewed;
   };
 
   $scope.getData = function() {
