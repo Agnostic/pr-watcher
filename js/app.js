@@ -101,6 +101,7 @@ app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', func
   };
 
   $scope.showRepo = function(id) {
+    console.log('#repo_' + id).find('tr:not(.ng-hide)'));
     return $('#repo_' + id).find('tr:not(.ng-hide)').length;
   };
 
