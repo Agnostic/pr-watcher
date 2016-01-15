@@ -52,17 +52,14 @@ app.run(['$http', function($http) {
 app.filter('PrsBy', function() {
   return function(items, user, filter) {
     var filtered = [];
-    var user = '@' + user.login;
     angular.forEach(items, function(item) {
       if (!filter) {
         filtered.push(item);
       } else {
-        console.log(item.body, user);
-        var mentioned = item.body && item.body.match(user);
         var reviewer = _.find(item.reviewers, function(reviewer) {
-          return reviewer.name === user;
+          return reviewer.name === ('@' + user.login);
         });
-        if (mentioned || reviewer) {
+        if (reviewer || item.user.login === user.login) {
           filtered.push(item);
         }
       }
