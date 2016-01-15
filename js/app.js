@@ -21,7 +21,8 @@ app.service('Github', ['$http', function($http) {
 }]);
 
 app.run(['$http', function($http) {
-  var clientId = 'fcc57884b81d98d9bee3';
+  var clientId = '';
+  var clientSecret = '';
   var baseUrl = 'http://github.services.ooyala.net';
   var code;
 
@@ -31,7 +32,7 @@ app.run(['$http', function($http) {
     $http
       .post(baseUrl + '/login/oauth/access_token', {
         client_id: clientId,
-        client_secret: '1a9367f8ab0ed7eec4db37d464c25c55a5f741c5',
+        client_secret: clientSecret,
         code: code
       }).then(function(response) {
         if (response.data.access_token) {
@@ -155,7 +156,11 @@ app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', func
     });
   }
 
-  $timeout(function() {
-    $scope.getData();
-  }, 1000 * 60 * 5);
+  $scope.reload = function() {
+    $timeout(function() {
+      $scope.getData();
+      $scope.reload();
+    }, 1000 * 60 * 5);
+  };
+  $scope.reload();
 }]);
