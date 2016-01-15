@@ -68,6 +68,11 @@ app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', func
     return me && me.reviewed;
   };
 
+  $scope.mentioned = function(body) {
+    var user = '@' + $scope.user.login;
+    return body.match(user);
+  };
+
   $scope.getData = function() {
     $scope.orgs = [];
 
