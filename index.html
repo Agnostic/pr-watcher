@@ -42,7 +42,7 @@
           <div class="panel-title">Organization: {{ org.name }}</div>
         </div>
         <div class="panel-body" ng-show="!org.hidden">
-          <div ng-repeat="repo in org.repos" class="repository" id="repo_{{ repo.id }}" ng-hide="!repo.prs.length">
+          <div ng-repeat="repo in org.repos" class="repository" id="repo_{{ repo.id }}" ng-hide="!repo.prs.length || hideRepo(repo.id)">
             <h3>{{ repo.name }}</h3>
             <table class="table table-hover">
               <tbody>

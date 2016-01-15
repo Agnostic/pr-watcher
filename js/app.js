@@ -98,10 +98,9 @@ app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', func
     return body.match(user);
   };
 
-  // $scope.showRepo = function(id) {
-  //   console.log($('#repo_' + id).find('tr:not(.ng-hide)'));
-  //   return $('#repo_' + id).find('tr:not(.ng-hide)').length;
-  // };
+  $scope.hideRepo = function(id) {
+    return !$('#repo_' + id).find('tr').length;
+  };
 
   // $scope.showOrg = function(id) {
   //   return $('#org_' + id).find('.repository:visible').length;
