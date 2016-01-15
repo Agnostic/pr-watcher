@@ -50,8 +50,31 @@ app.run(['$http', function($http) {
   }
 }]);
 
+app.filter('PrsBy', function() {
+  return function(items, user, filter) {
+    var filtered = [];
+    var user = '@' + user.login;
+    angular.forEach(items, function(item) {
+      if (!filter) {
+        filtered.push(item);
+      } else {
+        var mentioned = item.body && item.body.match(user);
+        var reviewer = _.find(item.reviewers, function(reviewer) {
+          return reviewer.name === user;
+        });
+        console.log(item, mentioned, reviewer);
+        if (mentioned || reviewer) {
+          filtered.push(item);
+        }
+      }
+    });
+    return filtered;
+  };
+});
+
 app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', function($scope, Github, $http, $timeout) {
   $scope.user = {};
+  $scope.filterBy = localStorage.getItem('filterBy') || '';
 
   var orgs = localStorage.getItem('orgs');
   if (orgs) {
@@ -60,6 +83,10 @@ app.controller('reposController', ['$scope', 'Github', '$http', '$timeout', func
     orgs = ['frontend', 'optimization'];
     localStorage.setItem('orgs', JSON.stringify(orgs));
   }
+
+  $scope.$watch('filterBy', function(val) {
+    localStorage.setItem('filterBy', val);
+  });
 
   $scope.reviewed = function(reviewers) {
     var me = _.find(reviewers, function(reviewer) {

@@ -20,8 +20,8 @@
 
         <div class="clearfix">
           <div class="btn-group pull-right" role="group" aria-label="Filter">
-            <button type="button" class="btn btn-default active">All PRs</button>
-            <button type="button" class="btn btn-default" >My PRs</button>
+            <button type="button" class="btn btn-default active" ng-click="filterBy = ''">All PRs</button>
+            <button type="button" class="btn btn-default" ng-click="filterBy = 'mine'">My PRs</button>
             <!-- <button type="button" class="btn btn-default">Pending review</button> -->
           </div>
         </div>
@@ -40,7 +40,7 @@
             <h3>{{ repo.name }}</h3>
             <table class="table table-hover">
               <tbody>
-                <tr ng-repeat="pr in repo.prs" ng-class="{ warning: !reviewed(pr.reviewers) && mentioned(pr.body) }">
+                <tr ng-repeat="pr in repo.prs | PrsBy:user:filterBy" ng-class="{ warning: !reviewed(pr.reviewers) && mentioned(pr.body) }">
                   <td><a ng-href="{{ pr.html_url }}" target="_blank">{{ pr.title }}</a></td>
                   <td>
                     <span class="label label-default"
