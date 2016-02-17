@@ -21,8 +21,8 @@ app.service('Github', ['$http', function($http) {
 }]);
 
 app.run(['$http', function($http) {
-  var clientId = '';
-  var clientSecret = '';
+  var clientId = 'd3d7cbd7dce23dd9de98';
+  var clientSecret = '808ec362dbf485cb5ccd3bb34652d2e080e98217';
   var baseUrl = 'http://github.services.ooyala.net';
   var code;
 
