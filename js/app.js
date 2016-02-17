@@ -23,14 +23,15 @@ app.service('Github', ['$http', function($http) {
 app.run(['$http', function($http) {
   var clientId = 'd3d7cbd7dce23dd9de98';
   var clientSecret = '808ec362dbf485cb5ccd3bb34652d2e080e98217';
-  var baseUrl = 'http://github.services.ooyala.net';
+  var baseUrl = 'http://agnostic.github.io/pr-watcher/';
+  var githubUrl = 'https://github.com';
   var code;
 
   if (location.search.match(/code/)) {
     code = location.search.substr(1, location.search.length).split('=')[1];
 
     $http
-      .post(baseUrl + '/login/oauth/access_token', {
+      .post(githubUrl + '/login/oauth/access_token', {
         client_id: clientId,
         client_secret: clientSecret,
         code: code
@@ -38,11 +39,11 @@ app.run(['$http', function($http) {
         if (response.data.access_token) {
           localStorage.setItem('accessToken', response.data.access_token);
         }
-        location.href = '/pages/frontend/pr-manager/';
+        location.href = '/';
       });
   } else {
     if (!localStorage.getItem('accessToken')) {
-      location.href = baseUrl + '/login/oauth/authorize?client_id=' + clientId;
+      location.href = githubUrl + '/login/oauth/authorize?client_id=' + clientId;
     } else {
       // TODO
       // Validate access token
